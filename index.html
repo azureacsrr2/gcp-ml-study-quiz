@@ -37,7 +37,7 @@
             <!-- Header and Question -->
             <div class="mb-6 pb-4 border-b">
                 <div class="flex justify-between items-center mb-2">
-                    <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider" id="question-counter">Question 1 of 60</span>
+                    <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider" id="question-counter">Question 1 of 100</span>
                     <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full" id="question-category-label">Category: Initializing...</span>
                 </div>
                 <h2 class="text-xl md:text-2xl font-semibold text-gray-900" id="current-question-text">Loading question...</h2>
@@ -77,11 +77,11 @@
         let currentQuestionIndex = 0;
         let isAnswerRevealed = false;
 
-        // --- Question Data (60 Comprehensive Questions) ---
+        // --- Question Data (100 Comprehensive Questions across all categories) ---
         const questions = [
-            // --- Category 1: ML Problem Framing & Core Concepts 🎯 ---
+            // --- Category 1: ML Problem Framing & Core Concepts 🎯 (Q2, Q57, Q69, Q88, Q141, Q327) ---
             {
-                category: "ML Problem Framing & Core Concepts 🎯 (Q2, Q57)",
+                category: "ML Problem Framing & Core Concepts 🎯",
                 question: "An organization wants to make its shuttle route efficient after users confirm stops one day ahead. What approach should you take?",
                 options: [
                     { id: 'A', text: 'Build a regression model to predict passenger counts at each station.' },
@@ -90,109 +90,133 @@
                     { id: 'D', text: 'Build a reinforcement learning model to simulate outcomes.' }
                 ],
                 correct: 'C',
-                explanation: "Since attendance is confirmed one day in advance, this is a **route optimization problem (non-ML)**, not a prediction problem. The most efficient approach is simply calculating the shortest path among confirmed stops, likely using an exact algorithm rather than ML."
+                explanation: "Since attendance is confirmed, this is a **route optimization problem (non-ML)**. The efficient solution is calculating the shortest path among confirmed stops, not predicting attendance."
             },
             {
-                category: "ML Problem Framing & Core Concepts 🎯 (Q25, Q321)",
-                question: "Your object detection model has low **precision** (too many false positives). How should you adjust the model's final layer threshold to increase precision?",
+                category: "ML Problem Framing & Core Concepts 🎯",
+                question: "You need a model for non-compliant photos that ensures the app **does not falsely accept** a non-compliant picture (minimizing False Positives). Which metric to optimize?",
                 options: [
-                    { id: 'A', text: 'Increase the recall.' },
-                    { id: 'B', text: '**Decrease the recall.**' },
-                    { id: 'C', text: 'Increase the number of false positives.' },
-                    { id: 'D', text: 'Decrease the probability threshold.' }
+                    { id: 'A', text: 'Falsely accepting a non-compliant photo is a False Negative. Optimize Recall.' },
+                    { id: 'B', text: 'Optimize the model’s F1 score.' },
+                    { id: 'C', text: 'Optimize the model’s Accuracy.' },
+                    { id: 'D', text: 'Falsely accepting a non-compliant photo is a **False Positive**. Optimize **Precision**.' }
+                ],
+                correct: 'D',
+                explanation: "To minimize False Positives (FPs), you must optimize **Precision** (TP / (TP + FP)). This makes the model highly cautious about predicting compliance."
+            },
+            {
+                category: "ML Problem Framing & Core Concepts 🎯",
+                question: "In a subscription renewal model (90% renew, 10% cancel), the model predicts cancelers at 99% accuracy but renewers at 82%. How should you interpret these results?",
+                options: [
+                    { id: 'A', text: 'This is not a good result because accuracy should be higher for the majority class (renewers).' },
+                    { id: 'B', text: 'This model performs worse than predicting that everyone will always renew.' },
+                    { id: 'C', text: 'This is a **good result** because predicting the minority class (cancelers) is usually the hard, high-value task.' },
+                    { id: 'D', text: 'The high accuracy on the minority class indicates data leakage.' }
+                ],
+                correct: 'C',
+                explanation: "Achieving high accuracy on the **minority class** (cancelers) in a highly imbalanced scenario is typically the harder challenge and a strong indicator of model success, even if majority class accuracy dips."
+            },
+            {
+                category: "ML Problem Framing & Core Concepts 🎯",
+                question: "A model rejected a customer's loan. The risk department demands the **reasons** for this decision for **this individual case**.",
+                options: [
+                    { id: 'A', text: 'Use the global feature importance from the model evaluation page.' },
+                    { id: 'B', text: 'Use **local feature importance** from the predictions (e.g., Shapley values).' },
+                    { id: 'C', text: 'Check the correlation with target values in the data summary.' },
+                    { id: 'D', text: 'Perform a secondary validation on a held-out dataset.' }
                 ],
                 correct: 'B',
-                explanation: "Increasing precision means reducing False Positives (FP). To reduce FP, you must raise the prediction threshold, making the model more cautious. This trade-off inherently leads to a **decrease in recall** (more False Negatives)."
+                explanation: "Explaining an **individual prediction** requires **local feature attribution**, which calculates how each input feature contributed to that single output. Global importance is insufficient."
             },
             {
-                category: "ML Problem Framing & Core Concepts 🎯 (Q56, Q161)",
-                question: "You are building a fraud detection model and must prioritize detection while ensuring **Precision > 50%**. Which metric combination should you optimize?",
+                category: "ML Problem Framing & Core Concepts 🎯",
+                question: "To build an AI text generator that dynamically adapts to complex writing styles, the most **effective** model is:",
+                options: [
+                    { id: 'A', text: 'Fine-tune a BERT-based classification model.' },
+                    { id: 'B', text: 'Deploy Llama 3 from Model Garden, and use basic prompt engineering.' },
+                    { id: 'C', text: 'Use a simple RNN/LSTM architecture trained on labeled style data.' },
+                    { id: 'D', text: 'Use the **Gemini 1.5 Flash foundational model**.' }
+                ],
+                correct: 'D',
+                explanation: "Complex, dynamic style adaptation and high-fidelity generation tasks are best handled by a powerful, modern **Generative AI** or Large Language Model (LLM) like Gemini 1.5 Flash."
+            },
+            {
+                category: "ML Problem Framing & Core Concepts 🎯",
+                question: "You need a fraudulent transaction model that must prioritize detection while ensuring **Precision > 50%**. Which objective should you optimize?",
                 options: [
                     { id: 'A', text: 'Maximize the Area Under the ROC Curve (AUC ROC).' },
                     { id: 'B', text: 'Minimize Log loss.' },
                     { id: 'C', text: 'Maximize **Area Under the Precision-Recall Curve (AUC PR)**.' },
-                    { id: 'D', text: 'Maximize Recall at a Precision value of 0.50.' }
+                    { id: 'D', text: 'Maximize Recall at a fixed threshold.' }
                 ],
                 correct: 'C',
-                explanation: "For highly imbalanced datasets like fraud detection, **AUC PR (Precision-Recall)** is a superior metric to AUC ROC because it focuses on the positive class. Maximizing AUC PR is the best overall optimization objective when precision matters."
+                explanation: "For highly imbalanced data (like fraud), **AUC PR** is superior to AUC ROC because it focuses exclusively on the positive class and penalizes False Positives, making it the best objective when precision matters."
             },
             {
-                category: "ML Problem Framing & Core Concepts 🎯 (Q69)",
-                question: "You need a social media model to detect non-compliant profile photos. You must ensure the application **does not falsely accept** a non-compliant picture. Which metric to optimize?",
+                category: "ML Problem Framing & Core Concepts 🎯",
+                question: "What is the primary factor you must consider when building an insurance approval model due to its regulatory nature?",
                 options: [
-                    { id: 'A', text: 'Optimize the model’s F1 score.' },
-                    { id: 'B', text: 'Optimize the model’s **Recall** to minimize false negatives.' },
-                    { id: 'C', text: 'Optimize the model’s Accuracy.' },
-                    { id: 'D', text: 'Optimize the model’s **Precision** to minimize false positives.' }
-                ],
-                correct: 'D',
-                explanation: "Falsely accepting a non-compliant photo means a **False Positive** (FP). To minimize FP, you must optimize for **Precision** (Precision = TP / (TP + FP))."
-            },
-            {
-                category: "ML Problem Framing & Core Concepts 🎯 (Q88)",
-                question: "A bank's loan model rejected a customer. The risk department demands the **reasons that contributed to the model's decision** for this individual case.",
-                options: [
-                    { id: 'A', text: 'Use the correlation with target values in the data summary page.' },
-                    { id: 'B', text: 'Use the global feature importance percentages in the model evaluation page.' },
-                    { id: 'C', text: 'Use **local feature importance** from the predictions (e.g., Shapley values).' },
-                    { id: 'D', text: 'Vary features independently to identify the threshold that changes the classification.' }
+                    { id: 'A', text: 'Differential privacy and federated learning.' },
+                    { id: 'B', text: 'Redaction and low latency.' },
+                    { id: 'C', text: '**Traceability, reproducibility, and explainability.**' },
+                    { id: 'D', text: 'Model complexity and high F1-score.' }
                 ],
                 correct: 'C',
-                explanation: "Explaining an **individual prediction** requires **local feature importance (attribution)**, which calculates how each input feature contributed to that specific output. Global importance (B) only shows overall feature relevance."
+                explanation: "In regulated industries like insurance, legal compliance requires models to demonstrate clear **traceability** of data and code, **reproducible** outcomes, and **explainability** for adverse decisions."
             },
             {
-                category: "ML Problem Framing & Core Concepts 🎯 (Q327)",
-                question: "To build an AI text generator that dynamically adapts to complex writing styles, you should use the most **effective** model, which is:",
-                options: [
-                    { id: 'A', text: 'Deploy Llama 3 from Model Garden, and use prompt engineering techniques.' },
-                    { id: 'B', text: 'Fine-tune a BERT-based model from TensorFlow Hub.' },
-                    { id: 'C', text: 'Fine-tune Llama 3 from Model Garden on Vertex AI Pipelines.' },
-                    { id: 'D', text: 'Use the **Gemini 1.5 Flash foundational model**.' }
-                ],
-                correct: 'D',
-                explanation: "The task complexity (dynamic style adaptation) requires a powerful, modern **Generative AI** model. Gemini 1.5 Flash is designed for complex reasoning and high-fidelity generation, making it the most effective choice."
-            },
-            {
-                category: "ML Problem Framing & Core Concepts 🎯 (Q119)",
-                question: "What is the main advantage of using machine learning over a static keyword list (200,000 keywords) for an anti-spam service?",
+                category: "ML Problem Framing & Core Concepts 🎯",
+                question: "What is the main advantage of using ML over a static keyword list (200k entries) for an anti-spam service?",
                 options: [
                     { id: 'A', text: 'Posts can be compared to the keyword list much more quickly.' },
                     { id: 'B', text: 'A much longer keyword list can be used to flag spam posts.' },
-                    { id: 'C', text: 'New problematic phrases and latent semantic features can be identified in spam posts.' },
+                    { id: 'C', text: '**New problematic phrases and latent semantic features can be identified in spam posts.**' },
                     { id: 'D', text: 'Spam posts can be flagged using far fewer keywords.' }
                 ],
                 correct: 'C',
-                explanation: "A static keyword list is brittle. The primary value of ML is its ability to **generalize** and identify **new patterns** (problematic phrases/semantic meaning) not explicitly listed in the original keyword dataset."
+                explanation: "The key value of ML is its ability to **generalize** and identify **new patterns** or subtle semantic features that are not explicitly listed in the original, brittle keyword list."
             },
             {
-                category: "ML Problem Framing & Core Concepts 🎯 (Q141)",
-                question: "In a subscription renewal model (90% renew, 10% cancel), the model predicts cancelers at 99% accuracy but renewers at 82%. How should you interpret these results?",
+                category: "ML Problem Framing & Core Concepts 🎯",
+                question: "You trained a deep learning model. The model has low loss on the training data, but performs poorly on the validation data. What is the root problem?",
                 options: [
-                    { id: 'A', text: 'This is not a good result because accuracy should be higher for the majority class (renewers).' },
-                    { id: 'B', text: 'This is not a good result because the model is performing worse than predicting that everyone will always renew.' },
-                    { id: 'C', text: 'This is a **good result** because predicting the minority class (cancelers) is usually more difficult due to less data.' },
-                    { id: 'D', text: 'This is a good result because the accuracy across both groups is greater than 80%.' }
+                    { id: 'A', text: 'High Bias (Underfitting).' },
+                    { id: 'B', text: '**High Variance (Overfitting).**' },
+                    { id: 'C', text: 'Incorrect batch size.' },
+                    { id: 'D', text: 'Vanishing Gradient problem.' }
+                ],
+                correct: 'B',
+                explanation: "Low loss on training data indicates the model learned the training set well. Poor performance on unseen validation data means the model learned the noise, which is the definition of **Overfitting** (High Variance)."
+            },
+            {
+                category: "ML Problem Framing & Core Concepts 🎯",
+                question: "You need a recommendation model to suggest articles similar to the one a user is currently reading. Which approach should you use?",
+                options: [
+                    { id: 'A', text: 'Build a collaborative filtering system based on past user behavior.' },
+                    { id: 'B', text: 'Build a logistic regression model for each user.' },
+                    { id: 'C', text: '**Encode all articles into vectors using Word2Vec, and build a model that returns articles based on vector similarity (Content-based filtering).**' },
+                    { id: 'D', text: 'Manually label articles and train an SVM classifier.' }
                 ],
                 correct: 'C',
-                explanation: "Achieving high accuracy on the **minority class** (cancelers) in a highly imbalanced scenario is typically the harder challenge and a strong indicator of model success, especially when predicting the minority class is the business priority."
+                explanation: "Suggesting items 'similar to the one they are currently reading' is a **Content-Based Filtering** task. This requires using embeddings (like Word2Vec) to represent the articles as vectors and finding nearest neighbors."
             },
 
-            // --- Category 2: Data Engineering & Preprocessing 🛠️ ---
+            // --- Category 2: Data Engineering & Preprocessing 🛠️ (Q3, Q4, Q17, Q48, Q79, Q127, Q148, Q249) ---
             {
-                category: "Data Engineering & Preprocessing 🛠️ (Q3, Q60)",
+                category: "Data Engineering & Preprocessing 🛠️",
                 question: "You have extreme class imbalance (less than 1% positive examples) and the model won't converge. How should you resolve this issue?",
                 options: [
                     { id: 'A', text: 'Use a convolutional neural network (CNN) with max pooling.' },
                     { id: 'B', text: 'Remove negative examples until the numbers of positive and negative examples are equal.' },
-                    { id: 'C', text: 'Downsample the data with **upweighting** to create a balanced sample.' },
+                    { id: 'C', text: '**Downsample the data with upweighting to create a balanced sample.**' },
                     { id: 'D', text: 'Use the class distribution to generate synthetic 10% positive examples.' }
                 ],
                 correct: 'C',
                 explanation: "A standard solution for imbalance is to **downsample the majority class** and apply **upweighting** to the minority class during training. This creates a balanced training signal without discarding all majority data."
             },
             {
-                category: "Data Engineering & Preprocessing 🛠️ (Q4, Q33)",
-                question: "Your PySpark ETL pipeline for structured data takes over 12 hours. To speed it up using a serverless tool and SQL syntax, what should you do?",
+                category: "Data Engineering & Preprocessing 🛠️",
+                question: "Your PySpark ETL pipeline takes over 12 hours. To speed it up using a **serverless tool and SQL syntax**, what should you do?",
                 options: [
                     { id: 'A', text: 'Convert PySpark to SparkSQL queries and run on Dataproc.' },
                     { id: 'B', text: 'Use Data Fusion GUI to build transformation pipelines.' },
@@ -200,109 +224,157 @@
                     { id: 'D', text: 'Ingest data into **BigQuery**, convert PySpark commands into **BigQuery SQL queries**, and transform data in a new table.' }
                 ],
                 correct: 'D',
-                explanation: "The constraints demand a **serverless** tool and **SQL syntax**. Loading data into BigQuery and leveraging BigQuery's high-speed SQL execution for transformations meets these requirements, replacing the slow PySpark/Dataproc pipeline."
+                explanation: "BigQuery offers a high-speed, **serverless** engine using standard **SQL syntax**. Migrating ETL steps to BigQuery SQL drastically cuts runtime and complexity compared to managing Spark clusters."
             },
             {
-                category: "Data Engineering & Preprocessing 🛠️ (Q17, Q205)",
-                question: "You are streaming files with PII to Google Cloud and must ensure the PII is not accessible to unauthorized individuals. How should you secure the pipeline using the Cloud DLP API?",
+                category: "Data Engineering & Preprocessing 🛠️",
+                question: "You are streaming files with PII to Google Cloud. How should you secure the pipeline using the Cloud DLP API?",
                 options: [
-                    { id: 'A', text: 'Stream files to BigQuery, then periodically run a bulk scan using the DLP API.' },
-                    { id: 'B', text: 'Stream all files to a Sensitive bucket and secure it with restrictive IAM policies.' },
+                    { id: 'A', text: 'Stream all files to a Sensitive bucket and secure it with restrictive IAM policies.' },
+                    { id: 'B', text: 'Stream files to BigQuery, then periodically run a bulk scan using the DLP API.' },
                     { id: 'C', text: 'Create three buckets: **Quarantine, Sensitive, and Non-sensitive**. Write all data to Quarantine, scan periodically with DLP API, and move data accordingly.' },
                     { id: 'D', text: 'Stream data to BigQuery. Use client-side encryption before ingestion.' }
                 ],
                 correct: 'C',
-                explanation: "The recommended practice for handling potential PII is the **three-bucket quarantine architecture**. This ensures data is scanned and classified *before* being stored in a less restrictive location, limiting access to sensitive data during the transit and staging phases."
+                explanation: "The recommended practice for PII is the **three-bucket quarantine architecture** to scan and classify data immediately upon arrival, preventing unauthorized access before the data is stored permanently."
             },
             {
-                category: "Data Engineering & Preprocessing 🛠️ (Q18, Q48)",
-                question: "You are training an LTV model with time-series data from BigQuery, spanning multiple time columns. How should you split the data to ensure AutoML fits the best model?",
+                category: "Data Engineering & Preprocessing 🛠️",
+                question: "You are training a model with time-series data. How should you split the data to ensure **Autoscaled training** avoids **data leakage**?",
                 options: [
                     { id: 'A', text: 'Choose an automatic data split and let AutoML handle the time signal columns.' },
                     { id: 'B', text: 'Manually combine time signal columns into an array and let AutoML interpret it.' },
                     { id: 'C', text: 'Submit the data without manual transformations, specify a **Time column**, and let AutoML split data chronologically.' },
-                    { id: 'D', text: 'Manually split the data based on time, ensuring validation and testing sets contain the **most recent data**.' }
+                    { id: 'D', text: 'Manually split the data randomly 80/10/10.' }
                 ],
                 correct: 'C',
-                explanation: "For time series data, **chronological splitting** is essential to prevent data leakage (using future data to predict the past). AutoML Tables supports this natively by letting you specify the time column, reserving the most recent data for validation and testing."
+                explanation: "For time series data, using the **chronological split** feature and specifying a **Time column** is the only way to guarantee that the validation and test sets only contain data from *after* the training set, correctly preventing leakage."
             },
             {
-                category: "Data Engineering & Preprocessing 🛠️ (Q120, Q127)",
+                category: "Data Engineering & Preprocessing 🛠️",
                 question: "A categorical feature has substantial predictive power but is missing 5% of its values. How do you handle the missing data to minimize bias?",
                 options: [
-                    { id: 'A', text: 'Drop feature A if more than 15% of values are missing.' },
-                    { id: 'B', text: 'Replace the missing values with the feature’s mode (most frequent value).' },
+                    { id: 'A', text: 'Drop the rows with missing values.' },
+                    { id: 'B', text: 'Replace the missing values with the feature’s mode.' },
                     { id: 'C', text: 'Replace the missing values with a **placeholder category** indicating a missing value.' },
                     { id: 'D', text: 'Predict the missing values using linear regression.' }
                 ],
                 correct: 'C',
-                explanation: "When a categorical feature is missing, replacing the value with a **placeholder category** (e.g., 'MISSING') is the best method. This treats 'missingness' as its own informative category, ensuring no bias is introduced by imputation, which is critical if the missing values are non-random."
+                explanation: "For categorical data, replacing nulls with a dedicated **placeholder category** (e.g., 'UNKNOWN' or 'MISSING') is the safest method, as it preserves the information that the value was missing without introducing imputation bias."
             },
             {
-                category: "Data Engineering & Preprocessing 🛠️ (Q249)",
-                question: "You need to read over one million images from Cloud Storage at scale for TensorFlow training, minimizing I/O bottlenecks. What should you do?",
+                category: "Data Engineering & Preprocessing 🛠️",
+                question: "You need to read over one million images from Cloud Storage at scale for TensorFlow training, minimizing I/O bottlenecks. What is the recommended format?",
                 options: [
-                    { id: 'A', text: 'Load images via Cloud Storage FUSE and use `tf.data.Dataset.from_tensor_slices`.' },
-                    { id: 'B', text: 'Store image URLs in a CSV file and use `tf.data.experimental.CsvDataset`.' },
-                    { id: 'C', text: 'Convert the images to **TFRecords** and store them in a Cloud Storage bucket.' },
-                    { id: 'D', text: 'Use `tf.data.Dataset.list_files` on a Vertex AI managed dataset.' }
+                    { id: 'A', text: 'Store image URLs in a CSV file.' },
+                    { id: 'B', text: 'Load images via Cloud Storage FUSE.' },
+                    { id: 'C', text: '**Convert the images to TFRecords and store them in a Cloud Storage bucket.**' },
+                    { id: 'D', text: 'Use JPEG compression level 95.' }
                 ],
                 correct: 'C',
-                explanation: "**TFRecords** is the binary format optimized for efficient data reading with TensorFlow, especially for large datasets. Storing sharded TFRecords in Cloud Storage and reading with `tf.data.TFRecordDataset` minimizes data I/O overhead and serializes complex data quickly."
+                explanation: "**TFRecords** is the binary format specifically optimized for TensorFlow's internal I/O model. Sharding and storing them in Cloud Storage ensures fast, scalable data loading for distributed training."
             },
             {
-                category: "Data Engineering & Preprocessing 🛠️ (Q263)",
-                question: "You need to apply MaxMin scaling and one-hot encoding on hundreds of millions of BigQuery rows for a custom TensorFlow model, minimizing effort and cost.",
+                category: "Data Engineering & Preprocessing 🛠️",
+                question: "How should you reduce the sensitivity of PII data in BigQuery before training, while retaining value and utility?",
                 options: [
-                    { id: 'A', text: 'Write a SQL query to scale the numerical features. Allow TensorFlow to perform the one-hot text encoding.' },
-                    { id: 'B', text: 'Use TFX components with Dataflow to encode the text features and scale the numerical features.' },
-                    { id: 'C', text: 'Use BigQuery to scale the numerical features. Feed the features into Vertex AI Training. Allow TensorFlow to perform the one-hot text encoding.' },
-                    { id: 'D', text: 'Write a custom Dataflow pipeline that uses the BigQueryIO connector to ingest and process the data, writing results to Cloud Storage.' }
+                    { id: 'A', text: 'Use Dataflow to randomize the values in each sensitive column.' },
+                    { id: 'B', text: 'Remove all sensitive data fields entirely.' },
+                    { id: 'C', text: 'Use the **Cloud Data Loss Prevention (DLP) API** with Dataflow to encrypt sensitive values with **Format Preserving Encryption (FPE)**.' },
+                    { id: 'D', text: 'Create an authorized view in BigQuery that restricts access to the sensitive data.' }
                 ],
-                correct: 'A',
-                explanation: "Using **BigQuery SQL** for common transformations (like scaling lookups) is highly cost-efficient. For high-cardinality features like SKUs (one-hot encoding), handling this efficiently within the training script using TensorFlow's built-in feature column API is usually preferred, balancing effort and performance."
+                correct: 'C',
+                explanation: "**Format Preserving Encryption (FPE)** is the technique that tokenizes PII, allowing the model to train on the encrypted, non-sensitive representation (which maintains cardinality and length) while protecting the original data."
             },
             {
-                category: "Data Engineering & Preprocessing 🛠️ (Q148)",
-                question: "Your ML model uses data with PII from BigQuery. You need to **reduce the sensitivity** of the dataset before training while retaining value.",
-                options: [
-                    { id: 'A', text: 'Use Dataflow to ingest data and then randomize the values in each sensitive column.' },
-                    { id: 'B', text: 'Use the **Cloud Data Loss Prevention (DLP) API** with Dataflow to encrypt sensitive values with **Format Preserving Encryption (FPE)**.' },
-                    { id: 'C', text: 'Use the Cloud Data Loss Prevention (DLP) API to scan for sensitive data, and use Dataflow to replace all sensitive data by using the encryption algorithm AES-256 with a salt.' },
-                    { id: 'D', text: 'Before training, use BigQuery to select only the columns that do not contain sensitive data.' }
-                ],
-                correct: 'B',
-                explanation: "**Format Preserving Encryption (FPE)**, provided by the DLP API, is the best technique for de-identifying PII. FPE replaces the original value with a tokenized string of the same length and format, preserving the data's utility (cardinality/distribution) for ML modeling while protecting the underlying PII."
-            },
-            {
-                category: "Data Engineering & Preprocessing 🛠️ (Q79)",
-                question: "You need to train an NLP model on millions of examples with 100,000 unique words. You want to preprocess words individually for a recurrent neural network (RNN). What should you do?",
+                category: "Data Engineering & Preprocessing 🛠️",
+                question: "To train an NLP model on millions of examples with 100,000 unique words, how should you preprocess words for a recurrent neural network (RNN)?",
                 options: [
                     { id: 'A', text: 'Create a hot-encoding of all 100,000 words.' },
-                    { id: 'B', text: 'Identify **word embeddings** from a pre-trained model, and use the embeddings in your model.' },
-                    { id: 'C', text: 'Sort the words by frequency and use the frequencies as encodings.' },
+                    { id: 'B', text: 'Sort the words by frequency and use the frequencies as encodings.' },
+                    { id: 'C', text: '**Identify word embeddings from a pre-trained model, and use the embeddings in your model.**' },
                     { id: 'D', text: 'Assign a numerical value (1 to 100,000) to each word.' }
                 ],
-                correct: 'B',
-                explanation: "For a large vocabulary, one-hot encoding (A) leads to an unmanageably sparse and large input layer. Using **pre-trained word embeddings** (e.g., Word2Vec, GloVe) converts words into dense, meaningful vector representations, which is the standard and efficient practice for RNNs and deep learning NLP models."
+                correct: 'C',
+                explanation: "For large vocabularies, **word embeddings** convert sparse textual input into dense, numerically meaningful vectors, which is the standard and efficient practice for deep learning models like RNNs."
             },
             {
-                category: "Data Engineering & Preprocessing 🛠️ (Q43)",
-                question: "To predict car sales in different cities, which features should you use to train **city-specific relationships** between car type and sales?",
+                category: "Data Engineering & Preprocessing 🛠️",
+                question: "Your team needs to ensure that the preprocessing logic (min-max scaling, one-hot encoding) is applied consistently between batch training and real-time inference.",
                 options: [
-                    { id: 'A', text: 'Three individual features: binned latitude, binned longitude, and one-hot encoded car type.' },
-                    { id: 'B', text: 'One feature obtained as an element-wise product between latitude, longitude, and car type.' },
-                    { id: 'C', text: 'One feature obtained as an element-wise product between **binned latitude, binned longitude, and one-hot encoded car type**.' },
-                    { id: 'D', text: 'Two feature crosses: the first between binned latitude and car type, and the second between binned longitude and car type.' }
+                    { id: 'A', text: 'Deploy the training transformations in a separate Cloud Function and call it during serving.' },
+                    { id: 'B', text: 'Perform data validation to ensure the input data format is the same.' },
+                    { id: 'C', text: '**Refactor the transformation code from the batch data pipeline so that it can be used outside of the pipeline (e.g., in the model endpoint\'s code).**' },
+                    { id: 'D', text: 'Batch the real-time requests using a time window and process them via a Dataflow pipeline.' }
                 ],
                 correct: 'C',
-                explanation: "To capture the **interaction effect** that makes a relationship 'city-specific' (e.g., SUVs sell better in this specific location), you need a **feature cross** of the location (binned lat/long) and the car type. Combining all three provides the most specific and strongest signal for this relationship."
+                explanation: "The Training-Serving Skew mitigation best practice is to **bundle the transformation logic** directly into the serving model or runtime environment (e.g., in a Custom Prediction Routine or TFX model) to ensure consistency."
+            },
+            {
+                category: "Data Engineering & Preprocessing 🛠️",
+                question: "Which data transformation technique should you use to remove **non-informative features** from a **linear model**?",
+                options: [
+                    { id: 'A', text: 'Principal Component Analysis (PCA).' },
+                    { id: 'B', text: 'Iterative dropout technique.' },
+                    { id: 'C', text: '**Use L1 regularization (Lasso) to reduce the coefficients of uninformative features to 0.**' },
+                    { id: 'D', text: 'Use L2 regularization (Ridge) to shrink the coefficients.' }
+                ],
+                correct: 'C',
+                explanation: "In linear models, **L1 regularization (Lasso)** is the only technique that forces the coefficients of less important features to exactly zero, effectively performing feature selection and removal directly within the model training process."
             },
 
-            // --- Category 3: Model Development & Training 💻 ---
+            // --- Category 3: Model Development & Training 💻 (Q7, Q13, Q66, Q71, Q96, Q109, Q183, Q285, Q338) ---
             {
-                category: "Model Development & Training 💻 (Q13, Q109)",
-                question: "During batch training of a neural network, you notice **oscillation in the loss**. How should you adjust your model to ensure it converges?",
+                category: "Model Development & Training 💻",
+                question: "You need a no-code solution for classification workflows over BigQuery data, covering exploratory analysis, feature selection, training, and serving.",
+                options: [
+                    { id: 'A', text: 'Run a BigQuery ML task to perform logistic regression.' },
+                    { id: 'B', text: 'Use AI Platform Notebooks with pandas library.' },
+                    { id: 'C', text: '**Configure AutoML Tables to perform the classification task.**' },
+                    { id: 'D', text: 'Use Vertex AI to run a custom classification job for hyperparameter tuning.' }
+                ],
+                correct: 'C',
+                explanation: "The constraint for a **no-code** solution that covers the full lifecycle (EDA, feature engineering, model selection, tuning, and serving) on tabular data is uniquely met by **AutoML Tables**."
+            },
+            {
+                category: "Model Development & Training 💻",
+                question: "Your PyTorch model needs **hyperparameter tuning**. What is the most integrated method on Google Cloud?",
+                options: [
+                    { id: 'A', text: 'Convert the model to a Keras model, and run a Keras Tuner job.' },
+                    { id: 'B', text: 'Run a custom training job on Vertex AI and manually change parameters between runs.' },
+                    { id: 'C', text: 'Run a **Vertex AI hyperparameter tuning job** using custom containers.' },
+                    { id: 'D', text: 'Create a Kubeflow Pipelines instance, and run a hyperparameter tuning job on Katib.' }
+                ],
+                correct: 'C',
+                explanation: "The managed **Vertex AI hyperparameter tuning service** (powered by Vizier) is the integrated solution for efficient tuning. It works with non-TensorFlow models (like PyTorch) via **custom containers**."
+            },
+            {
+                category: "Model Development & Training 💻",
+                question: "You are training a large model on a TPU, but notice **low utilization**. What is the primary optimization step?",
+                options: [
+                    { id: 'A', text: 'Decrease the learning rate.' },
+                    { id: 'B', text: '**Increase the batch size.**' },
+                    { id: 'C', text: 'Apply stochastic gradient descent (SGD).' },
+                    { id: 'D', text: 'Reduce the dimensions of the input tensor.' }
+                ],
+                correct: 'B',
+                explanation: "**Low TPU utilization** almost always indicates the batch size is too small to saturate the massive number of parallel cores. Increasing the batch size maximizes hardware efficiency."
+            },
+            {
+                category: "Model Development & Training 💻",
+                question: "You trained a ResNet model on a TPU but are unsatisfied with memory usage and training time. You want to iterate quickly with minimal code changes. What should you do?",
+                options: [
+                    { id: 'A', text: 'Reduce the number of layers in the model architecture.' },
+                    { id: 'B', text: 'Reduce the global batch size from 1024 to 256.' },
+                    { id: 'C', text: 'Reduce the dimensions of the images used in the model.' },
+                    { id: 'D', text: '**Configure your model to use bfloat16 instead of float32.**' }
+                ],
+                correct: 'D',
+                explanation: "Switching to **bfloat16** precision is the most effective way to immediately halve the memory footprint and accelerate computation on TPUs with minimal code changes and little impact on accuracy."
+            },
+            {
+                category: "Model Development & Training 💻",
+                question: "You observe **oscillation in the loss** during neural network training. How should you adjust your model to promote convergence?",
                 options: [
                     { id: 'A', text: 'Increase the size of the training batch.' },
                     { id: 'B', text: 'Increase the learning rate hyperparameter.' },
@@ -310,97 +382,85 @@
                     { id: 'D', text: 'Apply L2 regularization parameter of 0.4.' }
                 ],
                 correct: 'C',
-                explanation: "Loss oscillation typically means the optimizer is overshooting the minimum in the loss landscape. The standard fix is to **decrease the learning rate**, which reduces the step size taken during each update, promoting convergence."
+                explanation: "Loss oscillation typically means the learning rate is too high, causing the optimizer to overshoot the minimum. **Decreasing the learning rate** reduces the step size, smoothing the convergence path."
             },
             {
-                category: "Model Development & Training 💻 (Q155, Q183)",
-                question: "You are training a large model on a TPU, but notice that the **TPU is not reaching its full capacity** (low utilization). What should you do?",
-                options: [
-                    { id: 'A', text: 'Increase the number of epochs.' },
-                    { id: 'B', text: 'Decrease the learning rate.' },
-                    { id: 'C', text: '**Increase the batch size.**' },
-                    { id: 'D', text: 'Replace the TPU with a v4-128 slice.' }
-                ],
-                correct: 'C',
-                explanation: "TPUs are designed for massive parallel processing and perform best with large batch sizes. **Low TPU utilization** usually indicates the batch size is too small to saturate the tensor cores. Increasing the batch size is the primary optimization step."
-            },
-            {
-                category: "Model Development & Training 💻 (Q96, Q101)",
-                question: "You trained a ResNet model on a TPU but are unsatisfied with memory usage and training time. You want to iterate quickly with minimal code changes. What should you do?",
-                options: [
-                    { id: 'A', text: 'Reduce the number of layers in the model architecture.' },
-                    { id: 'B', text: 'Reduce the global batch size from 1024 to 256.' },
-                    { id: 'C', text: 'Reduce the dimensions of the images used in the model.' },
-                    { id: 'D', text: 'Configure your model to use **bfloat16** instead of float32.' }
-                ],
-                correct: 'D',
-                explanation: "TPUs are natively optimized for **bfloat16** precision. Switching to bfloat16 immediately halves the memory footprint and accelerates computation with minimal impact on accuracy and minimal code changes."
-            },
-            {
-                category: "Model Development & Training 💻 (Q66, Q285)",
-                question: "Your data science team needs to perform hyperparameter tuning on a PyTorch model to optimize several parameters. What is the best method on Google Cloud?",
-                options: [
-                    { id: 'A', text: 'Convert the model to a Keras model, and run a Keras Tuner job.' },
-                    { id: 'B', text: 'Create a Kubeflow Pipelines instance, and run a hyperparameter tuning job on Katib.' },
-                    { id: 'C', text: 'Run a **Vertex AI hyperparameter tuning job** using custom containers.' },
-                    { id: 'D', text: 'Run multiple local training jobs on Vertex AI Workbench notebooks.' }
-                ],
-                correct: 'C',
-                explanation: "For frameworks like PyTorch that don't have native Vertex AI support, you must containerize the training job. The Vertex AI **hyperparameter tuning service** (powered by Vizier) works seamlessly with custom containers and handles job scheduling and parallel trial management."
-            },
-            {
-                category: "Model Development & Training 💻 (Q67, Q111)",
-                question: "You have a large corpus of support cases to classify into 3 categories. You need to build, test, and deploy a service quickly.",
-                options: [
-                    { id: 'A', text: 'Use the Cloud Natural Language API to obtain metadata.' },
-                    { id: 'B', text: 'Use BigQuery ML to build and test a logistic regression model.' },
-                    { id: 'C', text: 'Create a custom TensorFlow model using Google\'s BERT pre-trained model.' },
-                    { id: 'D', text: 'Use **AutoML Natural Language** to build and test a classifier, and deploy the model as a REST API.' }
-                ],
-                correct: 'D',
-                explanation: "The constraints emphasize **quick deployment** and a managed pipeline. **AutoML Natural Language** is the fastest way to build a high-accuracy custom classifier with minimal code, and it provides simple REST API deployment."
-            },
-            {
-                category: "Model Development & Training 💻 (Q71, Q87)",
-                question: "You need to train a regression model (50,000 records, 20 features, target can be negative) minimizing effort and training time.",
+                category: "Model Development & Training 💻",
+                question: "You need to train a regression model (50,000 records) on BigQuery data, minimizing effort and training time.",
                 options: [
                     { id: 'A', text: 'Create a custom TensorFlow DNN model.' },
                     { id: 'B', text: 'Use AutoML Tables to train the model.' },
-                    { id: 'C', text: 'Use **BQML XGBoost regression** to train the model.' },
+                    { id: 'C', text: '**Use BQML XGBoost regression to train the model.**' },
                     { id: 'D', text: 'Use BQML ARIMA_PLUS forecasting model.' }
                 ],
                 correct: 'C',
-                explanation: "The dataset is moderate size, structured, and already in BigQuery. **BigQuery ML XGBoost** is a highly efficient algorithm for tabular regression and minimizes both effort (simple SQL interface) and training time (serverless scaling)."
+                explanation: "For tabular regression on data already in BigQuery, **BigQuery ML (BQML) XGBoost** is the lowest effort and highly efficient method due to its serverless nature and simple SQL interface."
             },
-
-            // --- Category 4: MLOps - CI/CD, Pipelines & Automation ⚙️ ---
             {
-                category: "MLOps - CI/CD, Pipelines & Automation ⚙️ (Q8, Q39)",
-                question: "You want to automatically run a Kubeflow Pipelines training job when new cleaned data files become available in a Cloud Storage bucket.",
+                category: "Model Development & Training 💻",
+                question: "You need to train a Transformer model that includes custom TensorFlow operations and expects weeks of training time. Which architecture minimizes time and compute costs?",
                 options: [
-                    { id: 'A', text: 'Use App Engine to create a lightweight python client that continuously polls Cloud Storage.' },
-                    { id: 'B', text: 'Use Cloud Scheduler to schedule jobs at a regular interval to check object timestamps.' },
-                    { id: 'C', text: 'Configure a Cloud Storage trigger to send a message to **Pub/Sub**. Use a **Pub/Sub-triggered Cloud Function** to start the training job on a GKE cluster.' },
-                    { id: 'D', text: 'Configure a Dataflow pipeline to save the files in Cloud Storage and then start the training job.' }
+                    { id: 'A', text: 'Implement 8 workers of a2-megagpu-16g machines using MultiWorkerMirroredStrategy.' },
+                    { id: 'B', text: 'Implement 16 workers of c2d-highcpu-32 machines using MirroredStrategy.' },
+                    { id: 'C', text: 'Implement a **TPU Pod slice** with the most powerful **v4** accelerator type using **TPUStrategy**.' },
+                    { id: 'D', text: 'Implement a TPU Pod slice with the oldest v2 accelerator type.' }
                 ],
                 correct: 'C',
-                explanation: "This is the classic event-driven MLOps trigger architecture: **Cloud Storage** events fire to a **Pub/Sub** topic, which reliably triggers a **Cloud Function** (or Cloud Run service) to execute the Kubeflow Pipeline run."
+                explanation: "For extremely large, long-running models, **TPU Pod slices** (especially modern versions like v4) combined with **`tf.distribute.TPUStrategy`** offer the highest density of processing power, minimizing both training time and cost (especially if using preemptible TPUs)."
             },
             {
-                category: "MLOps - CI/CD, Pipelines & Automation ⚙️ (Q19, Q217)",
-                question: "You need to automate the execution of unit tests whenever code is pushed to your development branch in Cloud Source Repositories.",
+                category: "Model Development & Training 💻",
+                question: "You developed a deep learning model. Training loss is low, but validation loss is stagnant. What debugging step should you take first?",
+                options: [
+                    { id: 'A', text: '**Verify that your model can obtain a low loss on a small subset of the dataset (Overfitting a small batch).**' },
+                    { id: 'B', text: 'Add handcrafted features to inject domain knowledge.' },
+                    { id: 'C', text: 'Use the Vertex AI hyperparameter tuning service to identify a better learning rate.' },
+                    { id: 'D', text: 'Use hardware accelerators and train your model for more epochs.' }
+                ],
+                correct: 'A',
+                explanation: "The first step in deep learning debugging is verifying the network's capacity to learn. If the model cannot overfit a small, simple batch of data, there is a fundamental bug in the model architecture or implementation."
+            },
+            {
+                category: "Model Development & Training 💻",
+                question: "You need to build classification workflows over structured BigQuery data without writing code (EDA, feature selection, training, tuning, serving).",
+                options: [
+                    { id: 'A', text: 'Run a logistic regression job on BigQuery ML.' },
+                    { id: 'B', text: 'Train a TensorFlow model on Vertex AI.' },
+                    { id: 'C', text: 'Use scikit-learn in Vertex AI Workbench with pandas library.' },
+                    { id: 'D', text: '**Train a classification Vertex AutoML model.**' }
+                ],
+                correct: 'D',
+                explanation: "The constraint for a **no-code** solution that covers the full lifecycle (EDA, feature engineering, and hyperparameter tuning) is specifically met by **Vertex AutoML**."
+            },
+            {
+                category: "Model Development & Training 💻",
+                question: "You need to train an object detection model on 3 million X-ray images ($2 \text{ GB}$ each) on a Compute Engine instance with 1 P100 GPU. Training is taking a very long time. What is the most effective solution?",
+                options: [
+                    { id: 'A', text: 'Increase the instance memory to $512 \text{ GB}$ and increase the batch size.' },
+                    { id: 'B', text: 'Enable early stopping in your Vertex AI Training job.' },
+                    { id: 'C', text: '**Replace the NVIDIA P100 GPU with a v3-32 TPU in the training job.**' },
+                    { id: 'D', text: 'Use the tf.distribute.Strategy API and run a distributed training job on multiple P100s.' }
+                ],
+                correct: 'C',
+                explanation: "For massive-scale workloads (3 million $2 \text{ GB}$ images), the sheer throughput required far exceeds that of even multiple P100 GPUs. Switching to a **Cloud TPU** (like the v3-32 slice) is the most effective way to achieve the necessary speed and parallelism for large models."
+            },
+
+            // --- Category 4: MLOps - CI/CD, Pipelines & Automation ⚙️ (Q8, Q19, Q40, Q124, Q203, Q217, Q324, Q330, Q335) ---
+            {
+                category: "MLOps - CI/CD, Pipelines & Automation ⚙️",
+                question: "How should you automate the execution of unit tests whenever code is pushed to your development branch in Cloud Source Repositories?",
                 options: [
                     { id: 'A', text: 'Set up a Cloud Logging sink to a Pub/Sub topic to capture interactions.' },
                     { id: 'B', text: 'Write a script that sequentially performs the push and executes the unit tests on Cloud Run.' },
-                    { id: 'C', text: 'Use **Cloud Build**, set an automated trigger to execute the unit tests when changes are pushed to the repository.' },
+                    { id: 'C', text: '**Use Cloud Build, set an automated trigger to execute the unit tests when changes are pushed to the repository.**' },
                     { id: 'D', text: 'Create an automated workflow in Cloud Composer that runs daily and looks for changes.' }
                 ],
                 correct: 'C',
-                explanation: "The standard practice for **Continuous Integration (CI)** on Google Cloud is to use **Cloud Build**. Its Git triggers allow you to automatically execute testing and build steps upon every push to a specific branch."
+                explanation: "**Cloud Build** is the dedicated service for Continuous Integration (CI). Its native Git triggers automatically start defined build and test steps upon repository pushes."
             },
             {
-                category: "MLOps - CI/CD, Pipelines & Automation ⚙️ (Q124, Q129)",
-                question: "You need an end-to-end training pipeline for a TensorFlow model (several TB of data) that includes data quality and model quality checks, minimizing development and maintenance.",
+                category: "MLOps - CI/CD, Pipelines & Automation ⚙️",
+                question: "You need a scalable, automated pipeline (TensorFlow, several TB of data) that includes **data quality** and **model quality checks**, minimizing maintenance.",
                 options: [
                     { id: 'A', text: 'Create the pipeline using Kubeflow Pipelines DSL and orchestrate it using Kubeflow on GKE.' },
                     { id: 'B', text: 'Create the pipeline using **TensorFlow Extended (TFX)** and standard TFX components. Orchestrate the pipeline using **Vertex AI Pipelines**.' },
@@ -408,38 +468,108 @@
                     { id: 'D', text: 'Rewrite steps as an Apache Spark job and schedule execution on ephemeral Dataproc clusters.' }
                 ],
                 correct: 'B',
-                explanation: "**TFX** is the recommended framework for ML production pipelines as it includes native, standardized components for data validation, model analysis, and quality checks. **Vertex AI Pipelines** provides the necessary managed, low-maintenance orchestration layer."
+                explanation: "**TFX** is the standardized framework with pre-built components for data and model validation. Orchestrating it with the managed service, **Vertex AI Pipelines**, minimizes maintenance effort."
             },
             {
-                category: "MLOps - CI/CD, Pipelines & Automation ⚙️ (Q40)",
-                question: "Hypertuning is taking too long, delaying downstream processes. How should you speed up the job without significantly compromising effectiveness? (Choose two)",
+                category: "MLOps - CI/CD, Pipelines & Automation ⚙️",
+                question: "Hypertuning is taking too long. How should you speed up the job without significantly compromising effectiveness? (Choose two)",
                 options: [
                     { id: 'A', text: 'Decrease the number of parallel trials.' },
                     { id: 'B', text: 'Decrease the range of floating-point values.' },
-                    { id: 'C', text: 'Set the **early stopping** parameter to TRUE.' },
+                    { id: 'C', text: '**Set the early stopping parameter to TRUE.**' },
                     { id: 'D', text: 'Change the search algorithm from Bayesian search to random search.' },
-                    { id: 'E', text: 'Decrease the **maximum number of trials** during subsequent training phases.' }
+                    { id: 'E', text: '**Decrease the maximum number of trials** during subsequent training phases.' }
                 ],
                 correct: 'C',
-                explanation: "To reduce time, you must stop poor-performing trials early (**early stopping**) and limit the overall budget (**maximum number of trials**). These are direct configurations in the Vertex AI Hyperparameter Tuning service designed for this purpose."
+                explanation: "To reduce time, you must stop poor-performing trials early (**early stopping**) and limit the overall budget (**maximum number of trials**). This directly speeds up the job time in the Vertex AI Hyperparameter Tuning service."
             },
             {
-                category: "MLOps - CI/CD, Pipelines & Automation ⚙️ (Q203, Q242)",
-                question: "Your team trains many models using Vertex AI Pipelines and Notebooks. You want a single system to track model parameters, metrics (per epoch), and compare performance across all versions.",
+                category: "MLOps - CI/CD, Pipelines & Automation ⚙️",
+                question: "You need a system to track model parameters/metrics (per epoch) and compare performance across multiple versions created via Pipelines and Notebooks.",
                 options: [
                     { id: 'A', text: 'Vertex AI Pipelines, Vertex AI Feature Store, and Vertex AI Vizier.' },
                     { id: 'B', text: 'Vertex AI Pipelines, Vertex AI Experiments, and Vertex AI Vizier.' },
-                    { id: 'C', text: 'Vertex ML Metadata, **Vertex AI Experiments**, and **Vertex AI TensorBoard**.' },
+                    { id: 'C', text: '**Vertex ML Metadata, Vertex AI Experiments, and Vertex AI TensorBoard.**' },
                     { id: 'D', text: 'Vertex AI Pipelines, Vertex AI Feature Store, and Vertex AI TensorBoard.' }
                 ],
                 correct: 'C',
-                explanation: "**Vertex AI Experiments** tracks and compares metrics across runs. **Vertex AI TensorBoard** is essential for visualizing per-epoch metrics and debugging, while **Vertex ML Metadata** provides the artifact lineage."
+                explanation: "**Vertex AI Experiments** tracks comparisons, **Vertex AI TensorBoard** visualizes per-epoch metrics, and **Vertex ML Metadata** provides the artifact lineage, making this the complete tracking solution."
             },
-
-            // --- Category 5: MLOps - Serving, Monitoring & Management 💡 ---
             {
-                category: "MLOps - Serving, Monitoring & Management 💡 (Q1, Q29, Q83)",
-                question: "You need a serverless pipeline for high-throughput online inference with **computationally expensive preprocessing**. Which architecture should you use?",
+                category: "MLOps - CI/CD, Pipelines & Automation ⚙️",
+                question: "How should you operationalize a model from a notebook to a **reliable, repeatable, weekly** training process that tracks **versioning and lineage**?",
+                options: [
+                    { id: 'A', text: '1. Create an instance of the CustomTrainingJob class with the Vertex AI SDK. 2. Using the Notebooks API, create a scheduled execution to run the training code weekly.' },
+                    { id: 'B', text: '1. Create an instance of the CustomJob class with the Vertex AI SDK. 2. Use the Metadata API to register your model as a model artifact. 3. Using the Notebooks API, create a scheduled execution to run the training code weekly.' },
+                    { id: 'C', text: '1. **Create a managed pipeline in Vertex AI Pipelines and schedule it to run weekly.**' }
+                ],
+                correct: 'C',
+                explanation: "**Vertex AI Pipelines** is the dedicated, managed framework for creating a repeatable, scheduled MLOps process that automatically tracks versioning and lineage through Vertex ML Metadata integration."
+            },
+            {
+                category: "MLOps - CI/CD, Pipelines & Automation ⚙️",
+                question: "To track and compare a new model version and incorporate **dataset versioning** using Vertex AI, which services should you use?",
+                options: [
+                    { id: 'A', text: 'Vertex AI TensorBoard and Data Catalog.' },
+                    { id: 'B', text: 'Vertex AI Model Monitoring and Vertex AI Training.' },
+                    { id: 'C', text: '**Vertex AI Experiments and Vertex ML Metadata.**' },
+                    { id: 'D', text: 'Vertex AI Experiments and Vertex AI managed datasets.' }
+                ],
+                correct: 'C',
+                explanation: "**Vertex AI Experiments** organizes comparisons. **Vertex ML Metadata** is the fundamental tool for recording model lineage and the relationship with the **dataset version** used for training."
+            },
+            {
+                category: "MLOps - CI/CD, Pipelines & Automation ⚙️",
+                question: "You want to automatically run a Kubeflow Pipelines training job when new data files become available in a Cloud Storage bucket.",
+                options: [
+                    { id: 'A', text: 'Use App Engine to create a lightweight python client that continuously polls Cloud Storage.' },
+                    { id: 'B', text: 'Use Cloud Scheduler to schedule jobs at a regular interval to check object timestamps.' },
+                    { id: 'C', text: '**Configure a Cloud Storage trigger to send a message to Pub/Sub. Use a Pub/Sub-triggered Cloud Function to start the training job on a GKE cluster.**' },
+                    { id: 'D', text: 'Configure a Dataflow pipeline to save the files in Cloud Storage and then start the training job.' }
+                ],
+                correct: 'C',
+                explanation: "This is the standard event-driven architecture: **Cloud Storage Event -> Pub/Sub -> Triggered Cloud Function** (or Cloud Run service) to execute the pipeline run."
+            },
+            {
+                category: "MLOps - CI/CD, Pipelines & Automation ⚙️",
+                question: "You need to train an XGBoost model with custom dependencies via Vertex AI custom training, aiming to **minimize startup time**.",
+                options: [
+                    { id: 'A', text: 'Create a custom container that includes the data and the custom dependencies.' },
+                    { id: 'B', text: '**Store the data in a Cloud Storage bucket, and use the XGBoost prebuilt custom container to run your training application. Create a Python source distribution that installs the custom dependencies at runtime.**' },
+                    { id: 'C', text: 'Use the XGBoost prebuilt custom container. Create a Python source distribution that includes the data and installs the custom dependencies at runtime.' }
+                ],
+                correct: 'B',
+                explanation: "To **minimize startup time**, use the **prebuilt container** (avoiding a lengthy build). Dependencies are installed efficiently at runtime via a **Python source distribution** (`--package-path`)."
+            },
+            {
+                category: "MLOps - CI/CD, Pipelines & Automation ⚙️",
+                question: "What is the best way to develop and debug complex models in TensorFlow while maintaining **ease of debugging** and reducing **training time**?",
+                options: [
+                    { id: 'A', text: 'Configure a v3-8 TPU VM and SSH into the VM to train and debug the model.' },
+                    { id: 'B', text: 'Configure a v3-8 TPU node and use Cloud Shell to SSH into the Host VM.' },
+                    { id: 'C', text: 'Configure 4 NVIDIA P100 GPUs and use the ParameterServerStrategy.' },
+                    { id: 'D', text: 'Configure **4 NVIDIA P100 GPUs** and use **MultiWorkerMirroredStrategy**.' }
+                ],
+                correct: 'D',
+                explanation: "**MultiWorkerMirroredStrategy** on GPUs is a scalable distributed strategy that is highly compatible with standard Python debugging tools, balancing parallel performance with development flexibility."
+            },
+            {
+                category: "MLOps - CI/CD, Pipelines & Automation ⚙️",
+                question: "You have trained a scikit-learn model and want to deploy it to production for online and batch prediction, minimizing extra code.",
+                options: [
+                    { id: 'A', text: 'Upload your model to the Vertex AI Model Registry using a prebuilt container. Deploy to Endpoints and use `instanceConfig` for batch transformation.' },
+                    { id: 'B', text: 'Wrap your model in a **Custom Prediction Routine (CPR)**, build a container image, upload to Model Registry, and deploy for online/batch prediction.' },
+                    { id: 'C', text: 'Create a custom container, define a custom serving function, upload both, and deploy for online prediction only.' },
+                    { id: 'D', text: 'Create a custom container, upload it, and deploy for batch prediction using `instanceConfig`.' }
+                ],
+                correct: 'B',
+                explanation: "The **Custom Prediction Routine (CPR)** method is designed to package custom code (like scikit-learn models or preprocessing logic) for deployment onto Vertex AI, serving both online and batch predictions with minimal custom infrastructure."
+            },
+            
+            // --- Category 5: MLOps - Serving, Monitoring & Management 💡 (Q1, Q14, Q46, Q74, Q163, Q174, Q190, Q325, Q336) ---
+            {
+                category: "MLOps - Serving, Monitoring & Management 💡",
+                question: "You need a serverless pipeline for high-throughput online inference with **computationally expensive preprocessing**.",
                 options: [
                     { id: 'A', text: 'Send requests to Pub/Sub. Use Cloud Function for preprocessing. Submit prediction request to AI Platform.' },
                     { id: 'B', text: 'Stream requests into Cloud Spanner. Query a view for preprocessing logic. Submit prediction request to AI Platform.' },
@@ -447,11 +577,11 @@
                     { id: 'D', text: 'Deploy two models: one trained on raw data and one trained on preprocessed data.' }
                 ],
                 correct: 'C',
-                explanation: "For high-throughput inference requiring heavy, stateful preprocessing, **Dataflow** is the best managed tool to handle scalable stream processing and transformation before invoking the deployed model endpoint."
+                explanation: "**Dataflow** is the best managed service for scalable, stateful stream processing and is required to handle the computationally expensive preprocessing before serving the prediction."
             },
             {
-                category: "MLOps - Serving, Monitoring & Management 💡 (Q14, Q30)",
-                question: "Six months after deployment, a DNN model's accuracy is steadily deteriorating due to a **change in the distribution of input data**. What is the best immediate step?",
+                category: "MLOps - Serving, Monitoring & Management 💡",
+                question: "A DNN model's accuracy is steadily deteriorating due to **data drift**. What is the best immediate step?",
                 options: [
                     { id: 'A', text: 'Perform feature selection and retrain the model with fewer features.' },
                     { id: 'B', text: 'Retrain the model using L2 regularization.' },
@@ -459,10 +589,10 @@
                     { id: 'D', text: 'Perform feature selection and retrain the model on a monthly basis.' }
                 ],
                 correct: 'C',
-                explanation: "Deterioration caused by changing input data is **data drift**. The solution is continuous monitoring for this skew (using Vertex AI Model Monitoring) and triggering a retraining job based on the alert."
+                explanation: "The standard MLOps response to data drift is to deploy **Vertex AI Model Monitoring** to detect the skew/drift and trigger the **retraining pipeline** automatically based on the alert."
             },
             {
-                category: "MLOps - Serving, Monitoring & Management 💡 (Q46, Q77, Q189)",
+                category: "MLOps - Serving, Monitoring & Management 💡",
                 question: "You need to execute a **batch prediction** on 100 million records in a BigQuery table using a custom TensorFlow model, minimizing effort.",
                 options: [
                     { id: 'A', text: 'Run a batch prediction job on Vertex AI that points to the BigQuery table.' },
@@ -471,11 +601,11 @@
                     { id: 'D', text: 'Export data to Cloud Storage and configure a Vertex AI batch prediction job.' }
                 ],
                 correct: 'C',
-                explanation: "The simplest solution that minimizes effort and infrastructure setup is leveraging **BigQuery ML**. You can import the SavedModel and run inference directly on the massive table using standard SQL (`ML.PREDICT`)."
+                explanation: "By importing the TensorFlow model into **BigQuery ML**, you can run inference directly using simple SQL (`ML.PREDICT`), making it the lowest effort and most scalable approach for batch prediction on BigQuery data."
             },
             {
-                category: "MLOps - Serving, Monitoring & Management 💡 (Q74, Q145)",
-                question: "Your DNN regressor model (serving on CPUs) has $10 \text{ ms}$ latency, but requirements demand $8 \text{ ms}$. You accept a small performance drop. What is the fastest optimization to try?",
+                category: "MLOps - Serving, Monitoring & Management 💡",
+                question: "Your DNN model has $10 \text{ ms}$ latency, but requirements demand $8 \text{ ms}$. Accepting a small performance drop, what is the fastest optimization to try?",
                 options: [
                     { id: 'A', text: 'Switch from CPU to GPU serving.' },
                     { id: 'B', text: 'Increase the dropout rate to 0.8 and retrain your model.' },
@@ -483,11 +613,11 @@
                     { id: 'D', text: 'Increase the max\_batch\_size serving parameter.' }
                 ],
                 correct: 'C',
-                explanation: "**Quantization** (reducing precision from $float32/64$ to $float16/int8$) is a post-training optimization that significantly reduces model size and latency, with minimal effect on accuracy, making it the fastest technique to meet a tight latency target."
+                explanation: "**Quantization** is a post-training optimization that significantly reduces the model size and latency, achieving fast performance gains without requiring a lengthy retraining cycle."
             },
             {
-                category: "MLOps - Serving, Monitoring & Management 💡 (Q163, Q339)",
-                question: "A coupon model's predictions are too slow because the serving pipeline must join real-time cart data with customers' historic purchase data in **BigQuery**. How should you speed up predictions?",
+                category: "MLOps - Serving, Monitoring & Management 💡",
+                question: "Predictions are slow because the serving pipeline joins real-time cart data with customers' historic purchase data in **BigQuery**. How should you speed up predictions?",
                 options: [
                     { id: 'A', text: 'Attach an NVIDIA P100 GPU to your deployed model’s instance.' },
                     { id: 'B', text: 'Deploy your model to more instances behind a load balancer.' },
@@ -495,11 +625,11 @@
                     { id: 'D', text: 'Create a materialized view in BigQuery with the necessary data for predictions.' }
                 ],
                 correct: 'C',
-                explanation: "The bottleneck is the **feature lookup time** from BigQuery, which is optimized for analytics, not low-latency serving. The fastest way to fix this is to migrate the critical feature data to a **low-latency feature store**."
+                explanation: "BigQuery is optimized for analytics, not low-latency lookups. The bottleneck is feature retrieval. Migrating the critical features to a **low-latency feature store** or key-value store is the correct fix."
             },
             {
-                category: "MLOps - Serving, Monitoring & Management 💡 (Q174, Q190)",
-                question: "Your model drifts frequently, so you use Vertex AI Model Monitoring. To **reduce cost** while continuing to quickly detect drift, what should you adjust?",
+                category: "MLOps - Serving, Monitoring & Management 💡",
+                question: "To **reduce cost** while continuing to quickly detect drift using Vertex AI Model Monitoring, what should you adjust?",
                 options: [
                     { id: 'A', text: 'Replace the monitoring job with a custom SQL script running on BigQuery.' },
                     { id: 'B', text: 'Increase the `monitor_interval` parameter in the ScheduleConfig of the monitoring job.' },
@@ -507,10 +637,10 @@
                     { id: 'D', text: 'Use the features and the feature attributions for monitoring.' }
                 ],
                 correct: 'C',
-                explanation: "The cost of model monitoring scales with the amount of data analyzed. To reduce cost, you must monitor a smaller portion of the incoming traffic by **decreasing the prediction sampling rate** (sampling closer to 0 than 1)."
+                explanation: "Monitoring costs are determined by the volume of data analyzed. To reduce cost, you must analyze fewer prediction requests by **decreasing the sampling rate**."
             },
             {
-                category: "MLOps - Serving, Monitoring & Management 💡 (Q328)",
+                category: "MLOps - Serving, Monitoring & Management 💡",
                 question: "A small company needs a **scalable, reliable, cost-effective** serving solution with **minimal infrastructure expertise**.",
                 options: [
                     { id: 'A', text: 'Configure Compute Engine VMs to host your models.' },
@@ -519,20 +649,20 @@
                     { id: 'D', text: '**Deploy your models on Vertex AI endpoints.**' }
                 ],
                 correct: 'D',
-                explanation: "**Vertex AI Endpoints** is the single managed service that provides all necessary production features (autoscaling, monitoring, reliability) with zero infrastructure management burden, making it ideal for a team with limited cloud expertise."
+                explanation: "**Vertex AI Endpoints** is the managed service that provides all necessary production features (autoscaling, monitoring, reliability) with zero infrastructure management burden, making it ideal for a team with limited cloud expertise."
             },
             {
-                category: "MLOps - Serving, Monitoring & Management 💡 (Q329)",
+                category: "MLOps - Serving, Monitoring & Management 💡",
                 question: "LLM application has inconsistent **verbosity**. Seek a **scalable** solution to meet user expectations.",
                 options: [
                     { id: 'A', text: 'Implement a **keyword-based routing layer**. If the user\'s input contains keywords, **re-prompt the language model** to summarize or describe.' },
                     { id: 'B', text: 'Ask users to provide examples of responses with the appropriate verbosity as a list of question and answer pairs. Use this dataset to perform supervised fine tuning of the foundational model. Re-evaluate the verb' }
                 ],
                 correct: 'A',
-                explanation: "Controlling LLM behavior (like verbosity) is best done through **prompt engineering**. Implementing a scalable routing layer to modify the prompt based on user keywords is the most practical and immediate fix."
+                explanation: "Controlling LLM behavior (like verbosity) is best done through **prompt engineering** within a routing layer, which is scalable and avoids expensive model retraining."
             },
             {
-                category: "MLOps - Serving, Monitoring & Management 💡 (Q334)",
+                category: "MLOps - Serving, Monitoring & Management 💡",
                 question: "Managing a deployed Vertex AI model and wanting to **automatically retrain** it when performance **deteriorates**.",
                 options: [
                     { id: 'A', text: '**Create a Vertex AI Model Monitoring job to track the model\'s performance with production data, and trigger retraining when specific metrics drop below predefined thresholds.**' },
@@ -542,7 +672,31 @@
                 ],
                 correct: 'A',
                 explanation: "The solution must be **automatic**. **Vertex AI Model Monitoring** is the native service that tracks performance against baselines and sends alerts that trigger an automated retraining pipeline when deterioration is detected."
-            }
+            },
+            {
+                category: "MLOps - Serving, Monitoring & Management 💡",
+                question: "Deploying a **custom ML model** for **online serving** to optimize for **high throughput** and minimal **latency** using the simplest solution.",
+                options: [
+                    { id: 'A', text: 'Deploy the model to a Vertex AI endpoint resource to automatically scale the serving backend based on the throughput. Configure the endpoint\'s autoscaling settings to minimize latency.' },
+                    { id: 'B', text: '**Implement a containerized serving solution using Cloud Run. Configure the concurrency settings to handle multiple requests simultaneously.**' },
+                    { id: 'C', text: 'Apply simplification techniques such as model pruning and quantization to reduce the model\'s size and complexity. Retrain the model using Vertex AI to improve its performance, latency, memory, and throughput.' },
+                    { id: 'D', text: 'Enable request-response logging for the model hosted in Vertex AI. Use Looker Studio to analyze the logs, identify bottlenecks, and optimize the' }
+                ],
+                correct: 'B',
+                explanation: "**Cloud Run** is a simple, serverless solution for custom containers. Its core mechanism for achieving high throughput is optimizing **concurrency settings** to allow a single instance to handle multiple requests in parallel."
+            },
+            {
+                category: "MLOps - Serving, Monitoring & Management 💡",
+                question: "A **SQL analyst** needs to utilize a TensorFlow model stored in Cloud Storage using the **simplest and most efficient** approach.",
+                options: [
+                    { id: 'A', text: '**Import the model into Vertex AI Model Registry**. **Deploy the model to a Vertex AI endpoint**, and use **SQL for inference in BigQuery.**' },
+                    { id: 'B', text: 'Deploy the model by using TensorFlow Serving, and call for inference from BigQuery.' },
+                    { id: 'C', text: 'Convert the model into a BigQuery ML model, and use SQL for inference.' },
+                    { id: 'D', text: 'Import the model into BigQuery, and use SQL for inference.' }
+                ],
+                correct: 'A',
+                explanation: "The solution must enable **SQL inference** for the analyst. This is achieved by deploying the model to a **Vertex AI Endpoint** and leveraging BigQuery's built-in capability to call the endpoint directly using the `ML.PREDICT` SQL function."
+            },
         ];
         // --- End Question Data ---
 
