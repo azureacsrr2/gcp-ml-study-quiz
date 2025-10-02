@@ -1,2 +1,2 @@
 # gcp-ml-study-quiz
-l am crazy about certification - this one is only for google machine learning as of Oct 1 2025
+Let's get this google machine Learning certification -  only for google machine learning as of Aug 1 2025
