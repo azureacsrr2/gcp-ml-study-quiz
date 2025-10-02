@@ -1,0 +1,249 @@
+Category 1: ML Problem Framing & Core Concepts 🎯
+Question #327
+You are developing an AI text generator that will be able to dynamically adapt its generated responses to mirror the writing style of the user and mimic famous authors if their style is detected. You have a large dataset of various authors' works, and you plan to host the model on a custom VM. You want to use the most effective model. What should you do?
+
+A. Deploy Llama 3 from Model Garden, and use prompt engineering techniques.
+
+B. Fine-tune a BERT-based model from TensorFlow Hub.
+
+C. Fine-tune Llama 3 from Model Garden on Vertex AI Pipelines.
+
+D. Use the Gemini 1.5 Flash foundational model to build the text generator.
+
+Correct Answer: D
+
+Explanation: The requirement to dynamically adapt to and mimic diverse, complex writing styles is best met by a powerful, modern Generative AI model. Gemini 1.5 Flash is designed for high performance, complex reasoning, and generation tasks, making it the most effective choice for this use case.
+
+Question #333
+Your company's business stakeholders want to understand the factors driving customer churn to inform their business strategy. You need to build a customer churn prediction model that prioritizes simple interpretability of your model's results. You need to choose the ML framework and modeling technique that will explain which features led to the prediction. What should you do?
+
+A. Build a TensorFlow deep neural network (DNN) model, and use SHAP values for feature importance analysis.
+
+B. Build a PyTorch long short-term memory (LSTM) network, and use attention mechanisms for interpretability.
+
+C. Build a logistic regression model in scikit-learn, and interpret the model's output coefficients to understand feature impact.
+
+D. Build a linear regression model in scikit-learn, and interpret the model's standardized coefficients to understand feature impact.
+
+Correct Answer: C
+
+Explanation: For a binary classification problem (churn) where simple interpretability is the priority, logistic regression is the canonical choice. Its coefficients provide a direct, simple, and transparent measure of each feature's impact on the predicted probability of churn.
+
+Category 2: Data Engineering & Preprocessing 🛠️
+Question #322
+You work at an organization that maintains a cloud-based communication platform that integrates conventional chat, voice, and video conferencing into one platform. The audio recordings are stored in Cloud Storage. All recordings have a 16 kHz sample rate and are more than one minute long. You need to implement a new feature in the platform that will automatically transcribe voice call recordings into text for future applications, such as call summarization and sentiment analysis. How should you implement the voice call transcription feature while following Google-recommended practices?
+
+A. Use the original audio sampling rate, and transcribe the audio by using the Speech-to-Text API with synchronous recognition.
+
+B. Use the original audio sampling rate, and transcribe the audio by using the Speech-to-Text API with asynchronous recognition.
+
+C. Downsample the audio recordings to 8 kHz, and transcribe the audio by using the Speech-to-Text API with synchronous recognition.
+
+D. Downsample the audio recordings to 8 kHz, and transcribe the audio by using the Speech-to-Text API with asynchronous recognition.
+
+Correct Answer: B
+
+Explanation: For audio files longer than approximately one minute, the Google-recommended practice for the Speech-to-Text API is to use the asynchronous recognition method. The 16 kHz sample rate is optimal for the API's models, so no resampling is required.
+
+Question #332
+You are an AI engineer with an apparel retail company. The sales team has observed seasonal sales patterns over the past 5-6 years. The sales team analyzes and visualizes the weekly sales data stored in CSV files. You have been asked to estimate weekly sales for future seasons to optimize inventory and personnel workloads. You want to use the most efficient approach. What should you do?
+
+A. Upload the files into Cloud Storage. Use Python to preprocess and load the tabular data into BigQuery. Use time series forecasting models to predict weekly sales.
+
+B. Upload the files into Cloud Storage. Use Python to preprocess and load the tabular data into BigQuery. Train a logistic regression model by using BigQuery ML to predict each product's weekly sales as one of three categories: high, medium, or low.
+
+C. Load the files into BigQuery. Preprocess data by using BigQuery SQL. Connect BigQuery to Looker. Create a Looker dashboard that shows weekly sales trends in real time.
+
+Correct Answer: A
+
+Explanation: The business problem is inherently a time series forecasting task due to the need to estimate sales for future seasons. Loading the historical sales data into BigQuery is essential for scalable processing and leveraging specialized forecasting models, which directly addresses the inventory optimization goal.
+
+Category 3: Model Development & Training 💻
+Question #338
+You built a custom Vertex AI pipeline job that preprocesses images and trains an object detection model. The pipeline currently uses 1 n1-standard-8 machine with 1 NVIDIA Tesla V100 GPU. You want to reduce the model training time without compromising model accuracy. What should you do?
+
+A. Reduce the number of layers in your object detection model.
+
+B. Train the same model on a stratified subset of your dataset.
+
+C. Update the WorkerPoolSpec to use a machine with 24 vCPUs and 1 NVIDIA Tesla V100 GPU.
+
+D. Update the WorkerPoolSpec to use a machine with 24 vCPUs and 3 NVIDIA Tesla V100 GPUs.
+
+Correct Answer: D
+
+Explanation: To significantly reduce training time for a deep learning model without impacting accuracy, you must increase parallel processing. Scaling from 1 GPU to multiple GPUs (3 V100s) and ensuring adequate vCPUs (24) to keep the GPUs supplied with data provides the maximum acceleration for training.
+
+Category 4: MLOps - CI/CD, Pipelines & Automation ⚙️
+Question #324
+You need to train an XGBoost model on a small dataset. Your training code requires custom dependencies. You need to set up a Vertex AI custom training job. You want to minimize the startup time of the training job while following Google-recommended practices. What should you do?
+
+A. Create a custom container that includes the data and the custom dependencies. In your training application, load the data into a pandas DataFrame and train the model.
+
+B. Store the data in a Cloud Storage bucket, and use the XGBoost prebuilt custom container to run your training application. Create a Python source distribution that installs the custom dependencies at runtime. In your training application, read the data from Cloud Storage and train the model.
+
+C. Use the XGBoost prebuilt custom container. Create a Python source distribution that includes the data and installs the custom dependencies at runtime. In your training application, load the data into a pandas DataFrame and train the model.
+
+Correct Answer: B
+
+Explanation: To minimize startup time, the best practice is to use a prebuilt container rather than building a custom image. Custom dependencies are installed efficiently at runtime via a Python source distribution (using the Vertex AI Python SDK's --package-path feature). Data should be read from a scalable source like Cloud Storage.
+
+Question #330
+You are using Vertex AI to manage your ML models and datasets. You recently updated one of your models. You want to track and compare the new version with the previous one and incorporate dataset versioning. What should you do?
+
+A. Use Vertex AI TensorBoard to visualize the training metrics of the new model version, and use Data Catalog to manage dataset versioning.
+
+B. Use Vertex AI Model Monitoring to monitor the performance of the new model version, and use Vertex AI Training to manage dataset versioning.
+
+C. Use Vertex AI Experiments to track and compare model artifacts and versions, and use Vertex ML Metadata to manage dataset versioning.
+
+D. Use Vertex AI Experiments to track and compare model artifacts and versions, and use Vertex AI managed datasets to manage dataset versioning.
+
+Correct Answer: C
+
+Explanation: Vertex AI Experiments is the service for tracking and comparing multiple model runs, iterations, and metrics. Vertex ML Metadata is the underlying tool that automatically logs model lineage and tracks the specific dataset version used for each experiment run, ensuring reproducibility.
+
+Question #335
+You have recently developed a new ML model in a Jupyter notebook. You want to establish a reliable and repeatable model training process that tracks the versions and lineage of your model artifacts. You plan to retrain your model weekly. How should you operationalize your training process?
+
+A. 1. Create an instance of the CustomTrainingJob class with the Vertex AI SDK to train your model. 2. Using the Notebooks API, create a scheduled execution to run the training code weekly.
+
+B. 1. Create an instance of the CustomJob class with the Vertex AI SDK to train your model. 2. Use the Metadata API to register your model as a model artifact. 3. Using the Notebooks API, create a scheduled execution to run the training code weekly.
+
+C. 1. Create a managed pipeline in
+
+(The full option should read: "Create a managed pipeline in Vertex AI Pipelines that includes your training job and schedule it to run weekly.")
+
+Correct Answer: C
+
+Explanation: Vertex AI Pipelines is the correct, managed framework for setting up a reliable, repeatable, and scheduled ML workflow (like weekly retraining). The pipeline automatically integrates with Vertex ML Metadata to track versioning and lineage.
+
+Category 5: MLOps - Serving, Monitoring & Management 💡
+Question #323
+You have created multiple versions of an ML model and have imported them to Vertex AI Model Registry. You want to perform A/B testing to identify the best performing model using the simplest approach. What should you do?
+
+A. Split incoming traffic to distribute prediction requests among the versions. Monitor the performance of each version using Vertex AI's built-in monitoring tools.
+
+B. Split incoming traffic among Google Kubernetes Engine (GKE) clusters, and use Traffic Director to distribute prediction requests to different versions. Monitor the performance of each version using Cloud Monitoring.
+
+C. Split incoming traffic to distribute prediction requests among the versions. Monitor the performance of each version using Looker Studio dashboards that compare
+
+Correct Answer: A
+
+Explanation: The simplest managed solution for A/B testing is to deploy all model versions to a single Vertex AI Endpoint and use its native traffic splitting feature, then rely on the Vertex AI Model Monitoring service for performance comparison.
+
+Question #325
+You are building an ML model to predict customer churn for a subscription service. You have trained your model on Vertex AI using historical data, and deployed it to a Vertex AI endpoint for real-time predictions. After a few weeks, you notice that the model's performance, measured by AUC (area under the ROC curve), has dropped significantly in production compared to its performance during training. How should you troubleshoot this problem?
+
+A. Monitor the training/serving skew of feature values for requests sent to the endpoint.
+
+B. Monitor the resource utilization of the endpoint, such as CPU and memory usage, to identify potential bottlenecks in performance.
+
+C. Enable Vertex Explainable AI feature attribution to analyze model predictions and understand the impact of each feature on the model's predictions.
+
+D. Monitor the latency of the endpoint to determine whether predictions are being served within the expected time frame.
+
+Correct Answer: A
+
+Explanation: A drop in online performance compared to training performance suggests training/serving skew or data drift. The essential first step in troubleshooting is to monitor the distribution of live feature values against the training baseline to detect this data change.
+
+Question #326
+You work at an organization that manages a popular payment app. You built a fraudulent transaction detection model by using scikit-learn and deployed it to a Vertex AI endpoint. The endpoint is currently using 1 e2-standard-2 machine with 2 vCPUs and 8 GB of memory. You discover that traffic on the gateway fluctuates to four times more than the endpoint's capacity. You need to address this issue by using the most cost-effective approach. What should you do?
+
+A. Re-deploy the model with a TPU accelerator.
+
+B. Change the machine type to e2-highcpu-32 with 32 vCPUs and 32 GB of memory.
+
+C. Set up a monitoring job and an alert for CPU usage. If you receive an alert, scale the vCPUs as needed.
+
+D. Increase the number of maximum replicas to 6 nodes, each with 1 e2-standard-2 machine.
+
+Correct Answer: D
+
+Explanation: Horizontal scaling (adding replicas) is the most cost-effective and resilient strategy for handling fluctuating traffic. It uses Vertex AI's autoscaling feature efficiently by provisioning multiple standard machines to meet demand, rather than relying on a single large, expensive vertical scale.
+
+Question #328
+You are a lead ML architect at a small company that is migrating from on-premises to Google Cloud. Your company has limited resources and expertise in cloud infrastructure. You want to serve your models from Google Cloud as soon as possible. You want to use a scalable, reliable, and cost-effective solution that requires no additional resources. What should you do?
+
+A. Configure Compute Engine VMs to host your models.
+
+B. Create a Cloud Run function to deploy your models as serverless functions.
+
+C. Create a managed cluster on Google Kubernetes Engine (GKE), and deploy your models as containers.
+
+D. Deploy your models on Vertex AI endpoints.
+
+Correct Answer: D
+
+Explanation: Vertex AI Endpoints is the single best-managed service for deploying models. It is highly scalable, reliable, and requires minimal infrastructure expertise (no cluster/VM management needed), making it the quickest and most suitable solution for a resource-constrained team.
+
+Question #329
+You deployed a conversational application that uses a large language model (LLM). The application has 1,000 users. You collect user feedback about the verbosity and accuracy of the model 's responses. The user feedback indicates that the responses are factually correct but users want different levels of verbosity depending on the type of question. You want the model to return responses that are more consistent with users' expectations, and you want to use a scalable solution. What should you do?
+
+A. Implement a keyword-based routing layer. If the user's input contains the words "detailed" or "description," return a verbose response. If the user's input contains the word "fact." re-prompt the language model to summarize the response and return a concise response.
+
+B. Ask users to provide examples of responses with the appropriate verbosity as a list of question and answer pairs. Use this dataset to perform supervised fine tuning of the foundational model. Re-evaluate the verb
+
+Correct Answer: A
+
+Explanation: The problem is inconsistent verbosity, which is a behavioral trait. The most scalable and non-invasive fix is to use a prompt routing layer that detects user intent (e.g., keywords) and modifies the prompt sent to the LLM, instructing it to generate the desired length and style (prompt engineering).
+
+Question #331
+You are creating a retraining policy for a customer churn prediction model deployed in Vertex AI. New training data is added weekly. You want to implement a model retraining process that minimizes cost and effort. What should you do?
+
+A. Retrain the model when a significant shift in the distribution of customer attributes is detected in the production data compared to the training data.
+
+B. Retrain the model when the model's latency increases by 10% due to increased traffic.
+
+C. Retrain the model when the model accuracy drops by 10% on the new training dataset.
+
+D. Retrain the model every week when new training data is available.
+
+Correct Answer: A
+
+Explanation: The MLOps best practice for minimizing cost and effort is condition-based retraining. Retraining should be triggered not by a fixed schedule (D), but by a signal indicating impending model failure, such as feature drift (a shift in the distribution of input data).
+
+Question #334
+You are responsible for managing and monitoring a Vertex AI model that is deployed in production. You want to automatically retrain the model when its performance deteriorates. What should you do?
+
+A. Create a Vertex AI Model Monitoring job to track the model's performance with production data, and trigger retraining when specific metrics drop below predefined thresholds.
+
+B. Collect feedback from end users, and retrain the model based on their assessment of its performance.
+
+C. Configure a scheduled job to evaluate the model's performance on a static dataset, and retrain the model if the performance drops below predefined thresholds.
+
+D. Use Vertex Explainable AI to analyze feature attributions and identify potential biases in the model. Retrain when significant shifts in feature importance or biases are detected.
+
+Correct Answer: A
+
+Explanation: The solution must be automatic. Vertex AI Model Monitoring is the dedicated managed service that tracks performance metrics on live production data (model and data drift) and is designed to fire an alert that can trigger a retraining pipeline.
+
+Question #336
+You have developed a custom ML model using Vertex AI and want to deploy it for online serving. You need to optimize the model's serving performance by ensuring that the model can handle high throughput while minimizing latency. You want to use the simplest solution. What should you do?
+
+A. Deploy the model to a Vertex AI endpoint resource to automatically scale the serving backend based on the throughput. Configure the endpoint's autoscaling settings to minimize latency.
+
+B. Implement a containerized serving solution using Cloud Run. Configure the concurrency settings to handle multiple requests simultaneously.
+
+C. Apply simplification techniques such as model pruning and quantization to reduce the model's size and complexity. Retrain the model using Vertex AI to improve its performance, latency, memory, and throughput.
+
+D. Enable request-response logging for the model hosted in Vertex AI. Use Looker Studio to analyze the logs, identify bottlenecks, and optimize the
+
+Correct Answer: B
+
+Explanation: Cloud Run is a simple, serverless solution for custom containers that allows explicit configuration of concurrency. Configuring concurrency maximizes throughput (requests per second) by processing multiple requests per instance, which is crucial for high-performance, low-latency custom serving.
+
+Question #339
+You are a SQL analyst. You need to utilize a TensorFlow customer segmentation model stored In Cloud Storage. You want to use the simplest and most efficient approach. What should you do?
+
+A. Import the model into Vertex AI Model Registry. Deploy the model to a Vertex AI endpoint, and use SQL for inference in BigQuery.
+
+B. Deploy the model by using TensorFlow Serving, and call for inference from BigQuery.
+
+C. Convert the model into a BigQuery ML model, and use SQL for inference.
+
+D. Import the model into BigQuery, and use SQL for inference.
+
+Correct Answer: A
+
+Explanation: For a SQL analyst working with data in BigQuery, the simplest and most efficient method to use an external model is by querying a Vertex AI Endpoint directly from BigQuery using the ML.PREDICT SQL function.
